@@ -23,44 +23,6 @@ describe Graph do
   let(:end_nodes) { nodes[1..2] }
 
   subject { Graph.new(nodes, edges, start_nodes, end_nodes) }
-  before { subject.extend(NodeCoverage) }
-
-  describe "coverage tests" do
-    let(:end_nodes) { nodes[3..4] }
-
-    let(:covering_test) do
-      path1 = Path.new([nodes[0], nodes[1], nodes[4]])
-      path2 = Path.new([nodes[0], nodes[2], nodes[3]])
-
-      Test.new([path1, path2])
-    end
-
-    let(:covering_invalid_test) do
-      path1 = Path.new(nodes)
-
-      Test.new([path1])
-    end
-
-    let(:uncovering_test) do
-      path1 = Path.new(nodes[0..3])
-
-      Test.new([path1])
-    end
-
-    describe "#node_coveraged?" do
-      it "returns true if graph is node coveraged by test" do
-        expect(subject).to be_coveraged_with(covering_test)
-      end
-
-      it "returns false if graph is node coveraged by test but test is invalid" do
-        expect(subject).to_not be_coveraged_with(covering_invalid_test)
-      end
-
-      it "returns false if graph is not node coveraged by test" do
-        expect(subject).to_not be_coveraged_with(uncovering_test)
-      end
-    end
-  end
 
   describe "#can_reach_end_from" do
     before { subject.stub(:retrieve_path_for => Path.new(nodes[0])) }
@@ -97,13 +59,6 @@ describe Graph do
 
     it "returns nil if path from start doesnt exist" do
       expect(subject.path_from_start_to(nodes[5])).to be_nil
-    end
-  end
-
-  describe "#covering_test" do
-    it "returns proper test node covering graph" do
-      edges.concat([Edge.new(nodes[4], nodes[2])])
-      expect(subject).to be_coveraged_with(subject.covering_test)
     end
   end
 end
