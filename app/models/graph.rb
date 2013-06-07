@@ -1,11 +1,13 @@
 require_relative "graph_extensions/bfs"
 require_relative "graph_extensions/edge_pair_paths_generator"
 require_relative "graph_extensions/prime_paths_generator"
+require_relative "graph_extensions/data_flow"
 
 class Graph < Struct.new(:nodes, :edges, :start_nodes, :end_nodes)
   include Extensions::Bfs
   include Extensions::EdgePairPathsGenerator
   include Extensions::PrimePathsGenerator
+  include Extensions::DataFlow
 
   def add_node(node)
     nodes << node

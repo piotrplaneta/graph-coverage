@@ -7,6 +7,10 @@ class Path < Struct.new(:nodes)
     nodes << node
   end
 
+  def with_node(node)
+    Path.new(nodes + [node])
+  end
+
   def delete_node(node)
     nodes.delete(node)
   end

@@ -8,6 +8,9 @@ require_relative "../app/models/graph.rb"
 require_relative "../app/models/coverage_strategies/node_coverage.rb"
 require_relative "../app/models/coverage_strategies/edge_coverage.rb"
 require_relative "../app/models/coverage_strategies/edge_pair_coverage.rb"
+require_relative "../app/models/coverage_strategies/prime_coverage.rb"
+require_relative "../app/models/coverage_strategies/all_defs_coverage.rb"
+require_relative "../app/models/coverage_strategies/all_uses_coverage.rb"
 
 require "pry"
 RSpec.configure do |config|
