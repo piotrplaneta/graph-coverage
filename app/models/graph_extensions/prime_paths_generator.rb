@@ -5,9 +5,9 @@ module Extensions
 
       changed = true
       while(changed)
-        extended_paths = paths_extended_with_neighbours(paths).uniq
+        extended_paths = paths_extended_with_neighbours(paths)
         changed = !(extended_paths - paths).empty?
-        paths = (paths + extended_paths).uniq
+        paths = (paths + extended_paths)
       end
 
       paths_with_final_nodes = add_final_nodes(paths)
