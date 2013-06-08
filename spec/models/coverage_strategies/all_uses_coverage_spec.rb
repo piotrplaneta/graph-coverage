@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Graph do
+describe AllUsesCoverage do
   let(:nodes) do
     nodes = []
     [0, 1, 2, 3, 4, 5, 6].each do |id|
@@ -24,13 +24,16 @@ describe Graph do
 
   let(:start_nodes) { [nodes[0]] }
   let(:end_nodes) { [nodes[6]] }
+  let(:def_nodes) { [nodes[0]] }
+  let(:use_nodes) { nodes[4..5] }
 
-  subject { Graph.new(nodes, edges, start_nodes, end_nodes) }
+  subject do
+    graph = Graph.new(nodes, edges, start_nodes, end_nodes)
+    graph.def_nodes = def_nodes
+    graph.use_nodes = use_nodes
 
-  before { subject.def_nodes = [nodes[0]] }
-  before { subject.use_nodes = nodes[4..5] }
-
-  before { subject.extend(AllUsesCoverage) }
+    graph.coverage_strategy = AllUsesCoverage.new(graph)
+  end
 
   describe "coverage tests" do
     let(:covering_test) do

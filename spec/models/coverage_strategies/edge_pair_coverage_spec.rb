@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Graph do
+describe EdgePairCoverage do
   let(:nodes) do
     nodes = []
     [0, 1, 2, 3, 4].each do |id|
@@ -23,8 +23,10 @@ describe Graph do
   let(:start_nodes) { [nodes[0]] }
   let(:end_nodes) { nodes[3..4] }
 
-  subject { Graph.new(nodes, edges, start_nodes, end_nodes) }
-  before { subject.extend(EdgePairCoverage) }
+  subject do
+    graph = Graph.new(nodes, edges, start_nodes, end_nodes)
+    graph.coverage_strategy = EdgePairCoverage.new(graph)
+  end
 
   describe "coverage tests" do
 

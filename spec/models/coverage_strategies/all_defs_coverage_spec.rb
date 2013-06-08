@@ -24,13 +24,16 @@ describe Graph do
 
   let(:start_nodes) { [nodes[0]] }
   let(:end_nodes) { [nodes[6]] }
+  let(:def_nodes) { [nodes[0]] }
+  let(:use_nodes) { [nodes[4]] }
 
-  subject { Graph.new(nodes, edges, start_nodes, end_nodes) }
+  subject do
+    graph = Graph.new(nodes, edges, start_nodes, end_nodes)
+    graph.def_nodes = def_nodes
+    graph.use_nodes = use_nodes
 
-  before { subject.def_nodes = [nodes[0]] }
-  before { subject.use_nodes = [nodes[4]] }
-
-  before { subject.extend(AllDefsCoverage) }
+    graph.coverage_strategy = AllDefsCoverage.new(graph)
+  end
 
   describe "coverage tests" do
     let(:covering_test) do

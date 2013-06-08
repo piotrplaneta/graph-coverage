@@ -23,9 +23,6 @@ describe Graph do
   let(:start_nodes) { [nodes[0]] }
   let(:end_nodes) { nodes[3..4] }
 
-  subject { Graph.new(nodes, edges, start_nodes, end_nodes) }
-  before { subject.extend(EdgePairCoverage) }
-
   let(:proper_edge_pair_paths) do
     paths = []
     paths << Path.new([nodes[0], nodes[1], nodes[3]])
