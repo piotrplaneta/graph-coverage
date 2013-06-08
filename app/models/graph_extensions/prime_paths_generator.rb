@@ -7,11 +7,11 @@ module Extensions
       while(changed)
         extended_paths = paths_extended_with_neighbours(paths)
         changed = !(extended_paths - paths).empty?
-        paths = (paths + extended_paths)
+        paths = (paths | extended_paths)
       end
 
       paths_with_final_nodes = add_final_nodes(paths)
-      without_subpaths(paths_with_final_nodes.uniq)
+      without_subpaths(paths_with_final_nodes)
     end
 
     def without_subpaths(paths)
@@ -21,17 +21,18 @@ module Extensions
     end
 
     def add_final_nodes(paths)
-      paths + paths.flat_map do |path|
+      path_with_final_nodes = paths.flat_map do |path|
         with_final_node(path)
       end
+      paths | path_with_final_nodes.compact
     end
 
     def with_final_node(path)
-      path.nodes[-1].neighbours(edges).map do |neighbour|
+      path.nodes[-1].neighbours(edges).inject([]) do |paths, neighbour|
         if neighbour == path.nodes[0]
-          path.with_node(neighbour)
+          paths << path.with_node(neighbour)
         else
-          path
+          paths
         end
       end
     end
@@ -44,11 +45,11 @@ module Extensions
     end
 
     def paths_with_neighbours_of(path)
-      path.nodes[-1].neighbours(edges).map do |neighbour|
+      path.nodes[-1].neighbours(edges).inject([]) do |paths, neighbour|
         if !path.include_node?(neighbour)
-          path.with_node(neighbour)
+          paths << path.with_node(neighbour)
         else
-          nil
+          paths
         end
       end
     end
