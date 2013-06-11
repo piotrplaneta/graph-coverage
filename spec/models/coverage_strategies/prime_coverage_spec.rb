@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PrimeCoverage do
+describe CoverageStrategies::PrimeCoverage do
   let(:nodes) do
     nodes = []
     [0, 1, 2, 3].each do |id|
@@ -24,7 +24,7 @@ describe PrimeCoverage do
 
   subject do
     graph = Graph.new(nodes, edges, start_nodes, end_nodes)
-    graph.coverage_strategy = PrimeCoverage.new(graph)
+    graph.coverage_strategy = CoverageStrategies::PrimeCoverage.new(graph)
   end
 
   describe "coverage tests" do

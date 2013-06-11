@@ -1,30 +1,32 @@
 require_relative "graph_coverage"
 
-class NodeCoverage < GraphCoverage
-  def initialize(graph)
-    super(graph, paths_from_nodes(graph))
-  end
-
-  def covering_test
-    paths = graph.nodes.collect do |node|
-      path_through(node)
+module CoverageStrategies
+  class NodeCoverage < GraphCoverage
+    def initialize(graph)
+      super(graph, paths_from_nodes(graph))
     end
 
-    return nil if paths.any?(&:nil?)
+    def covering_test
+      paths = graph.nodes.collect do |node|
+        path_through(node)
+      end
 
-    Test.new(paths.uniq)
-  end
+      return nil if paths.any?(&:nil?)
 
-  private
-  def path_through(node)
-    if graph.path_from_start_to(node) && graph.path_to_end_from(node)
-      nodes = graph.path_from_start_to(node).nodes
-      nodes.concat(graph.path_to_end_from(node).nodes[1..-1])
-      Path.new(nodes)
+      Test.new(paths.uniq)
     end
-  end
 
-  def paths_from_nodes(graph)
-    graph.nodes.map { |node| Path.new([node]) }
+    private
+    def path_through(node)
+      if graph.path_from_start_to(node) && graph.path_to_end_from(node)
+        nodes = graph.path_from_start_to(node).nodes
+        nodes.concat(graph.path_to_end_from(node).nodes[1..-1])
+        Path.new(nodes)
+      end
+    end
+
+    def paths_from_nodes(graph)
+      graph.nodes.map { |node| Path.new([node]) }
+    end
   end
 end

@@ -1,0 +1,37 @@
+<div class="hero-unit">
+  <h1>Provide your graph information:</h1>
+
+  <div class="span4">
+    <p>
+      <form action="coverage" method="POST">
+        Edges (in new lines, space-seperated):
+        <p><textarea rows="8" name="edges"></textarea></p>
+        Starting nodes (space seperated):
+        <p><input type="text" name="start_nodes" /></p>
+        Ending nodes (space seperated):
+        <p><input type="text" name="end_nodes" /></p>
+        Def nodes (space seperated):
+        <p><input type="text" name="def_nodes" /></p>
+        Use nodes (space seperated):
+        <p><input type="text" name="use_nodes" /></p>
+        <p><select name="coverage_type">
+          <option value="all_defs">All defs coverage</option>
+          <option value="all_uses">All uses coverage</option>
+        </select></p>
+        <input type="submit" class="btn btn-primary btn-large" />
+      </form>
+    </p>
+  </div>
+
+  <div class="span4-right">
+    <p>Or upload a file with graph description:</p>
+    <form action='/coverage-file' enctype="multipart/form-data" method='POST'>
+      <p><input name="file" type="file" /></p>
+        <p><select name="coverage_type">
+          <option value="all_defs">All defs coverage</option>
+          <option value="all_uses">All uses coverage</option>
+        </select></p>
+      <input type="submit" class="btn btn-primary btn-large" />
+    </form>
+  </div>
+</div>

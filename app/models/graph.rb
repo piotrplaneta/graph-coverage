@@ -1,13 +1,21 @@
+require_relative "node.rb"
+require_relative "edge.rb"
+require_relative "path.rb"
+require_relative "test.rb"
 require_relative "graph_extensions/bfs"
 require_relative "graph_extensions/edge_pair_paths_generator"
 require_relative "graph_extensions/prime_paths_generator"
 require_relative "graph_extensions/data_flow"
 
-class Graph < Struct.new(:nodes, :edges, :start_nodes, :end_nodes, :coverage_strategy)
+Dir[File.dirname(__FILE__) + '/coverage_strategies/*.rb'].each {|file| require file }
+
+class Graph < Struct.new(:nodes, :edges, :start_nodes, :end_nodes)
   include Extensions::Bfs
   include Extensions::EdgePairPathsGenerator
   include Extensions::PrimePathsGenerator
   include Extensions::DataFlow
+
+  attr_accessor :coverage_strategy
 
   def add_node(node)
     nodes << node

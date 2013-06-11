@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Graph Coverage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Library that generates graph coverage">
+    <meta name="author" content="Piotr Płaneta">
+
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+    </style>
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="index">Graph Coverage</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="data-flow">Data flow</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+</html>

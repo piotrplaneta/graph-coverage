@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Graph do
+describe CoverageStrategies::AllDefsCoverage do
   let(:nodes) do
     nodes = []
     [0, 1, 2, 3, 4, 5, 6].each do |id|
@@ -32,7 +32,7 @@ describe Graph do
     graph.def_nodes = def_nodes
     graph.use_nodes = use_nodes
 
-    graph.coverage_strategy = AllDefsCoverage.new(graph)
+    graph.coverage_strategy = CoverageStrategies::AllDefsCoverage.new(graph)
   end
 
   describe "coverage tests" do

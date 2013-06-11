@@ -12,7 +12,15 @@ require_relative "../app/models/coverage_strategies/prime_coverage.rb"
 require_relative "../app/models/coverage_strategies/all_defs_coverage.rb"
 require_relative "../app/models/coverage_strategies/all_uses_coverage.rb"
 
+require_relative "../app/adapters/form_adapter"
+
+require_relative "../app/presenters/text/path_presenter.rb"
+require_relative "../app/presenters/text/test_presenter.rb"
+
+require "rubygems"
+require "bundler/setup"
 require "pry"
+
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
