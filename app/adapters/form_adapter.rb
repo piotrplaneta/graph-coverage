@@ -20,8 +20,15 @@ module Adapters
     end
 
     def set_coverage_strategy!(graph)
+      validate_strategy!
       strategy = eval("CoverageStrategies::" + coverage_strategy_name).new(graph)
       graph.coverage_strategy = strategy
+    end
+
+    def validate_strategy!
+      if !CoverageStrategies::AVAILABLE_STRATEGIES.include?(coverage_strategy_name)
+        raise ArgumentError.new("Invalid coverage strategy")
+      end
     end
 
     def coverage_strategy_name

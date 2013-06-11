@@ -1,4 +1,7 @@
 module CoverageStrategies
+  AVAILABLE_STRATEGIES = ["AllDefsCoverage", "AllUsesCoverage", "EdgeCoverage",
+                          "EdgePairCoverage", "NodeCoverage", "PrimeCoverage"]
+
   class GraphCoverage < Struct.new(:graph, :paths_to_cover)
     def covered_with?(test)
       return false if(test.nil? || !test.valid_on?(graph))

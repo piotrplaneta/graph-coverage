@@ -14,6 +14,8 @@ describe Adapters::FormAdapter do
   let(:def_nodes_param) { "1\n" }
   let(:use_nodes_param) { "4\n" }
 
+  let(:coverage_type_param) { "prime" }
+
   let(:params) do
     params = {}
     params[:edges] = edges_param
@@ -21,7 +23,7 @@ describe Adapters::FormAdapter do
     params[:end_nodes] = end_nodes_param
     params[:def_nodes] = def_nodes_param
     params[:use_nodes] = use_nodes_param
-    params[:coverage_type] = "prime"
+    params[:coverage_type] = coverage_type_param
     params
   end
 
@@ -48,7 +50,7 @@ describe Adapters::FormAdapter do
     graph
   end
 
-  describe "self.graph_from" do
+  describe "self.graph_from with valid coverage strategy" do
     it "parses form params to proper graph" do
       expect(Adapters::FormAdapter.graph_from(params)).to eq(proper_graph)
     end
@@ -74,6 +76,16 @@ describe Adapters::FormAdapter do
       it "doesnt crash" do
         expect { Adapters::FormAdapter.graph_from(params) }.to_not(raise_error)
       end
+    end
+
+  end
+
+  describe "with invalid coverage strategy" do
+    let(:coverage_type_param) { "not_supported" }
+
+    it "Raises an argument error" do
+      expect { Adapters::FormAdapter.graph_from(params) }.to(
+        raise_error(ArgumentError))
     end
   end
 end
