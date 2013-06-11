@@ -1,5 +1,6 @@
 require_relative "../adapters/form_adapter"
 require_relative "../presenters/text/test_presenter"
+require_relative "../uploaders/file_uploader"
 
 class GraphsController < Sinatra::Base
   set :views, Proc.new { File.join(root, "../views") }
@@ -15,12 +16,20 @@ class GraphsController < Sinatra::Base
 
   post "/coverage" do
     graph = Adapters::FormAdapter.graph_from(params)
+    erb :coverage, :locals => { :text_of_test => text_of_test(graph) }
+  end
+
+  post "/coverage-file" do
+    filename = Uploaders::FileUploader.upload(params)
+    filename
+  end
+
+  def text_of_test(graph)
     test = graph.coverage_strategy.covering_test
     if test
       text_of_test = Presenters::Text::TestPresenter.present(test)
     else
       text_of_test = "No test found, validate your graph."
     end
-    erb :coverage, :locals => { :text_of_test => text_of_test }
   end
 end
