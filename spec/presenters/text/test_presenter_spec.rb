@@ -10,9 +10,9 @@ describe Presenters::Text::TestPresenter do
 
   let(:test) { Test.new(paths) }
 
-  describe "self.present" do
+  describe "#to_text" do
     it "returns proper description" do
-      expect(Presenters::Text::TestPresenter.present(test)).
+      expect(Presenters::Text::TestPresenter.new(test).to_text).
         to(eq("0 -> 1 -> 2<br />4 -> 5 -> 6"))
     end
   end

@@ -50,41 +50,41 @@ describe GraphAdapters::FormAdapter do
     graph
   end
 
-  describe "self.graph_from with valid coverage strategy" do
+  describe "#graph with valid coverage strategy" do
     it "parses form params to proper graph" do
-      expect(GraphAdapters::FormAdapter.graph_from(params)).to eq(proper_graph)
+      expect(GraphAdapters::FormAdapter.new(params).graph).to eq(proper_graph)
     end
 
     it "sets proper coverage strategy" do
-      expect(GraphAdapters::FormAdapter.graph_from(params).coverage_strategy).
+      expect(GraphAdapters::FormAdapter.new(params).graph.coverage_strategy).
         to(eq(CoverageStrategies::PrimeCoverage.new(proper_graph)))
     end
 
     it "sets proper def nodes" do
-      expect(GraphAdapters::FormAdapter.graph_from(params).def_nodes).
+      expect(GraphAdapters::FormAdapter.new(params).graph.def_nodes).
         to(eq(def_nodes))
     end
 
     it "sets proper use nodes" do
-      expect(GraphAdapters::FormAdapter.graph_from(params).use_nodes).to(
-        eq(use_nodes))
+      expect(GraphAdapters::FormAdapter.new(params).graph.use_nodes).
+        to(eq(use_nodes))
     end
 
     describe "when lacking one of parameters" do
       let(:def_nodes_param) { nil }
 
       it "doesnt crash" do
-        expect { GraphAdapters::FormAdapter.graph_from(params) }.
+        expect { GraphAdapters::FormAdapter.new(params).graph }.
           to_not(raise_error)
       end
     end
   end
 
-  describe "with invalid coverage strategy" do
+  describe "#graph with invalid coverage strategy" do
     let(:coverage_type_param) { "not_supported" }
 
     it "Raises an argument error" do
-      expect { GraphAdapters::FormAdapter.graph_from(params) }.
+      expect { GraphAdapters::FormAdapter.new(params).graph }.
         to(raise_error(ArgumentError))
     end
   end

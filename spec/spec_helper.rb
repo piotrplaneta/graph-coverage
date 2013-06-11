@@ -14,7 +14,9 @@ require_relative "../app/models/coverage_strategies/all_uses_coverage.rb"
 
 require_relative "../app/graph_adapters/form_adapter"
 
+require_relative "../app/presenters/text/edge_presenter.rb"
 require_relative "../app/presenters/text/path_presenter.rb"
+require_relative "../app/presenters/text/graph_presenter.rb"
 require_relative "../app/presenters/text/test_presenter.rb"
 
 require "rubygems"
