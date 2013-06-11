@@ -1,4 +1,4 @@
-require_relative "../adapters/form_adapter"
+require_relative "../graph_adapters/form_adapter"
 require_relative "../presenters/text/test_presenter"
 require_relative "../uploaders/file_uploader"
 
@@ -15,7 +15,7 @@ class GraphsController < Sinatra::Base
   end
 
   post "/coverage" do
-    graph = Adapters::FormAdapter.graph_from(params)
+    graph = GraphAdapters::FormAdapter.graph_from(params)
     erb :coverage, :locals => { :text_of_test => text_of_test(graph) }
   end
 

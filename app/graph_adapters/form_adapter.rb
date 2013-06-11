@@ -1,6 +1,6 @@
 require_relative "../models/graph.rb"
 
-module Adapters
+module GraphAdapters
   class FormAdapter < Struct.new(:params)
     def self.graph_from(params)
       new(params).graph

@@ -12,8 +12,8 @@ describe Presenters::Text::TestPresenter do
 
   describe "self.present" do
     it "returns proper description" do
-      expect(Presenters::Text::TestPresenter.present(test)).to(
-        eq("0 -> 1 -> 2<br />4 -> 5 -> 6"))
+      expect(Presenters::Text::TestPresenter.present(test)).
+        to(eq("0 -> 1 -> 2<br />4 -> 5 -> 6"))
     end
   end
 end

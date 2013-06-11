@@ -38,9 +38,8 @@ describe Graph do
 
   describe "#path_to_end_from" do
     it "returns proper path to one of end nodes if exists" do
-      expect(subject.path_to_end_from(nodes[3])).to(
-        eq(Path.new([nodes[3], nodes[1]]))
-      )
+      expect(subject.path_to_end_from(nodes[3])).
+        to(eq(Path.new([nodes[3], nodes[1]])))
     end
 
     it "returns nil if path to end doesnt exist" do
@@ -52,9 +51,8 @@ describe Graph do
     subject { Graph.new(nodes.concat([Node.new(5)]), edges, start_nodes, end_nodes) }
 
     it "returns proper path from one of starting nodes if exists" do
-      expect(subject.path_from_start_to(nodes[4])).to(
-        eq(Path.new([nodes[0], nodes[1], nodes[4]]))
-      )
+      expect(subject.path_from_start_to(nodes[4])).
+        to(eq(Path.new([nodes[0], nodes[1], nodes[4]])))
     end
 
     it "returns nil if path from start doesnt exist" do
