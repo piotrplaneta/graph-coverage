@@ -1,7 +1,7 @@
 require_relative "../graph_adapters/form_adapter"
-require_relative "../presenters/text/test_presenter"
-require_relative "../presenters/text/graph_presenter"
+require_relative "../graph_adapters/file_adapter"
 require_relative "../uploaders/file_uploader"
+require_relative "../helpers/coverage_helper"
 
 class GraphsController < Sinatra::Base
   set :views, Proc.new { File.join(root, "../views") }
@@ -18,28 +18,17 @@ class GraphsController < Sinatra::Base
   post "/coverage" do
     graph = GraphAdapters::FormAdapter.graph_from(params)
 
-    erb :coverage, :locals => {
-      :text_of_test => text_of_test_for(graph),
-      :text_of_graph => Presenters::Text::GraphPresenter.present(graph)
-    }
+    render_coverage(graph, params[:format])
   end
 
   post "/coverage-file" do
     filename = Uploaders::FileUploader.upload(params)
     graph = GraphAdapters::FileAdapter.graph_from(filename)
 
-    erb :coverage, :locals => {
-      :text_of_test => text_of_test_for(graph),
-      :text_of_graph => Presenters::Text::GraphPresenter.present(graph)
-    }
+    render_coverage(graph, params[:format])
   end
 
-  def text_of_test_for(graph)
-    test = graph.coverage_strategy.covering_test
-    if test
-      text_of_test = Presenters::Text::TestPresenter.present(test)
-    else
-      text_of_test = "No test found, validate your graph."
-    end
+  def render_coverage(graph, format)
+    erb :coverage, :locals => Helpers::CoverageHelper.new(graph, format).locals
   end
 end

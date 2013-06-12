@@ -1,6 +1,35 @@
+<script type="text/javascript" src="/js/raphael-min.js"></script>
+<script type="text/javascript" src="/js/dracula_graffle.js"></script>
+<script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/js/dracula_graph.js"></script>
+
+<% if edges_json %>
+<script type="text/javascript">
+var height = 200;
+var width = 900;
+
+window.onload = function() {
+  var g = new Graph();
+
+  edges = <%= edges_json %>;
+
+  edges.forEach(function(edge) {
+    g.addEdge(edge.source, edge.destination, {"directed":true});
+  });
+
+  var layouter = new Graph.Layout.Spring(g);
+  layouter.layout();
+
+  var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
+  renderer.draw();
+};
+</script>
+<% end %>
+
 <div class="hero-unit">
   <h1>Graph:</h1>
   <%= text_of_graph %>
+  <div id="canvas"></div>
   <h1>Coverage:</h1>
   <%= text_of_test %>
 </div>
