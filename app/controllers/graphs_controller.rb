@@ -22,12 +22,13 @@ class GraphsController < Sinatra::Base
   end
 
   post "/coverage-file" do
-    filename = Uploaders::FileUploader.upload(params)
+    filename = Uploaders::FileUploader.upload!(params)
     graph = GraphAdapters::FileAdapter.graph_from(filename)
 
     render_coverage(graph, params[:format])
   end
 
+  private
   def render_coverage(graph, format)
     erb :coverage, :locals => Helpers::CoverageHelper.new(graph, format).locals
   end
